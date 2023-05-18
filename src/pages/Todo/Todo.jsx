@@ -66,7 +66,7 @@ const handleChange = (type)=>{
 }
 
 const handleClick = (type,data)=>{
-    if(type === "delete"){  console.log(type,data.id); dispatch(deleteTodosAction(data.id)) }
+    if(type === "delete"){dispatch(deleteTodosAction(data.id)) }
     if(type === "edit"){  setIsModalOpen(false)  }
 }
 
