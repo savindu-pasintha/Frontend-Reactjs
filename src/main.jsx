@@ -16,13 +16,14 @@ import Login from './pages/user/Login.jsx';
 import Todo from './pages/Todo/Todo.jsx';
 import { Provider } from 'react-redux';
 import Store from '../StatesManagement/Store';
+import LayoutScreen from './LayoutScreen.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={Store}>
      <BrowserRouter>
         <Routes>
-          <Route exact path="/todo" element={<Todo/>}/>
+          <Route exact path="/todo" element={<LayoutScreen/>}/>
           <Route exact path="/user/profile" element={<Profile/>} />
           <Route exact path="/user/registration" element={<Registration/>} />
           <Route exact path="/user/login" element={<Login />} />
