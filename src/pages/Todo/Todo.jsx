@@ -9,6 +9,8 @@ import {
   deleteTodosAction,
 } from "../../../StatesManagement/reducers/TodosReducerslice";
 import { useDispatch, useSelector } from "react-redux";
+import { FilterOutlined} from '@ant-design/icons';
+
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography;
 
@@ -60,6 +62,7 @@ const Todo = () => {
 
   const handleChange = (type) => {
     if (type == "ok") {
+     if(id && name && description && status) return
       dispatch(
         setTodosAction({
           id: id,
@@ -90,23 +93,24 @@ const Todo = () => {
     <>
       <Row>
         <Col span={24}>
-          <AddButton onClick={() => setIsModalOpen(true)}>+ Todo</AddButton>
+          <AddButton onClick={() => setIsModalOpen(true)} className="text-capitalize bg-warning text-dark ">+ Todo</AddButton>
           <AddModal
             handleChange={(type) => handleChange(type)}
             isModalOpen={isModalOpen}
             handleInput={handleInput}
           />
         </Col>
+        <div className="d-flex w-100 m-2"> <FilterOutlined style={{color:"red",fontSize:30}}  label="" onClick={(e)=>{consolr.log("")}}/> </div>
       </Row>
       <Row style={rowStyled}>
         <Col span={8} style={colStyled}>
-          <Title level={4}>Todo</Title>
+          <Title level={4} className="fw-bolder  bg-warning text-dark">Todo</Title>
         </Col>
         <Col span={8} style={colStyled}>
-          <Title level={4}>In Progress</Title>
+          <Title level={4} className="fw-bolder  bg-primary text-dark">In Progress</Title>
         </Col>
         <Col span={8} style={colStyled}>
-          <Title level={4}>Done</Title>
+          <Title level={4} className="fw-bolder  bg-success text-dark">Done</Title>
         </Col>
       </Row>
 
@@ -158,7 +162,7 @@ const rowStyled = {
   color: "white",
 };
 const colStyled = {
-  border: "1px solid purple",
+//   border: "1px solid purple",
 };
 const AddButton = styled(Button)`
   color: green;

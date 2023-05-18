@@ -8,10 +8,10 @@ const TodoCard = ({data,handleClick}) => {
   return (
     <div className='row border boder-1 p-0 mb-2 mx-2 mt-2' >
      <div className='d-flex'>
-        <Title level={4}>{data?.name}</Title>
+        <Title level={4} className="text-capitalize">{data?.name}</Title>
      </div>
      <div className='d-flex'>
-       <Title level={5}>{data?.description}</Title>
+       <Title level={5} className="text-capitalize">{data?.description}</Title>
      </div>
      <div className='d-flex'>
        <Title level={5}>{data?.createdAt.toString()}</Title>

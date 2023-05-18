@@ -8,7 +8,7 @@ import {
   Router,
   Routes,
 } from "react-router-dom";
-import './index.css'
+// import './index.css'
 
 import Profile from './pages/user/Profile.jsx';
 import Registration from './pages/user/Registration.jsx';
@@ -23,12 +23,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={Store}>
      <BrowserRouter>
         <Routes>
-          <Route exact path="/todo" element={<LayoutScreen/>}/>
-          <Route exact path="/user/profile" element={<Profile/>} />
-          <Route exact path="/user/registration" element={<Registration/>} />
-          <Route exact path="/user/login" element={<Login />} />
-          <Route exact path="/todo" element={<Todo/>} />
-          <Route path="*" element={<div>PAGE NOT FOUND</div>} />
+          <Route exact path="/" element={<LayoutScreen/>}>
+              <Route exact path="/todo" element={<Todo/>}/>
+              <Route exact path="/profile" element={<Profile/>} />
+              <Route exact path="/registration" element={<Registration/>} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/logout" element={<Login />} />
+              <Route exact path="/todo" element={<Todo/>} />
+              <Route path="*" element={<div>PAGE NOT FOUND</div>} />
+          </Route>
         </Routes>
      </BrowserRouter>
      </Provider>
