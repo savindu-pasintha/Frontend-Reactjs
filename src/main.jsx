@@ -13,12 +13,13 @@ import './index.css'
 import Profile from './pages/user/Profile.jsx';
 import Registration from './pages/user/Registration.jsx';
 import Login from './pages/user/Login.jsx';
-import Todo from './pages/Todo/Todo';
-
-//  <Navigation />
+import Todo from './pages/Todo/Todo.jsx';
+import { Provider } from 'react-redux';
+import Store from '../StatesManagement/Store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Provider store={Store}>
      <BrowserRouter>
         <Routes>
           <Route exact path="/todo" element={<Todo/>}/>
@@ -29,5 +30,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="*" element={<div>PAGE NOT FOUND</div>} />
         </Routes>
      </BrowserRouter>
+     </Provider>
   </React.StrictMode>,
 )

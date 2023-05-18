@@ -4,80 +4,39 @@ import TodoCard from "../../component/TodoCard/TodoCard";
 import './Todo.css'
 import { Layout, Space, Col, Row,Button ,Typography  } from "antd";
 import AddModal from "../../component/Modal/AddModal";
+import { setTodosAction ,deleteTodosAction} from "../../../StatesManagement/reducers/TodosReducerslice";
+import { useDispatch, useSelector } from "react-redux";
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography;
 
 const Todo = () => {
-    const [dataObj,setDataObj] = useState({id:null,name:'',description:'',createdAt:null,status:0,images:[]})
+    const dispatch = useDispatch();
+    const getTodos = useSelector(state => state.todo).todos
+    const [id,setId] = useState(0)
+    const [status,setStatus] = useState(0)
+    const [name,setName] = useState('')
+    const [description,setDescription] = useState('')
+    const [createdAt,setCreatedAt] = useState(new Date())
+    const [images,setImages] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [todoList,setTodoList] = useState([
-        {
-          id: 1,
-          name: "Task 1",
-          description: "This is a Description.",
-          images: [],
-          createdAt: "2023/05/18 17:05PM",
-          status:1
-        },{
-            id: 2,
-            name: "Task 2",
-            description: "This is a Description.",
-            images: [],
-            createdAt: "2023/05/18 17:05PM",
-            status:1
-          },
-          {
-            id: 3,
-            name: "Task 3",
-            description: "This is a Description.",
-            images: [],
-            createdAt: "2023/05/18 17:05PM",
-            status:2
-          }, {
-            id: 4,
-            name: "Task 4",
-            description: "This is a Description.",
-            images: [],
-            createdAt: "2023/05/18 17:05PM",
-            status:0
-          },{
-              id: 5,
-              name: "Task 5",
-              description: "This is a Description.",
-              images: [],
-              createdAt: "2023/05/18 17:05PM",
-              status:1
-            },
-            {
-              id: 6,
-              name: "Task 6",
-              description: "This is a Description.",
-              images: [],
-              createdAt: "2023/05/18 17:05PM",
-              status:1
-            },
-      ])
-
+   
 const handleInput = (type,e)=>{
  if(type === "name"){
-    console.log(e.target.value)
-    setDataObj({...dataObj, name: e.target.value})
+     setName(e.target.value)
  }
 
  if(type === "description"){
-    console.log(e.target.value)
-    setDataObj({...dataObj, descriptions: e.target.value})
+    setDescription(e.target.value)
  }
 
- if(type == "status"){
-    console.log(e)
-    setDataObj({...dataObj,status:e})
+ if(type === "status"){
+    setStatus(e)
  }
 
  if (type === "file") {
    const files = e.target.files;
    var imgs = [];
-   imgs = dataObj.images;
+   imgs = images;
    if (files && files.length > 0) {
      Array.from(files).forEach((file) => {
        const reader = new FileReader();
@@ -88,18 +47,17 @@ const handleInput = (type,e)=>{
        reader.readAsDataURL(file);
      });
      if (imgs.length > 0) {
-       setDataObj({ ...dataObj, images: imgs });
+       setImages(imgs);
      }
    }
  }
- const date = new Date()
- setDataObj({...dataObj, id: todoList.length, createdAt: date.toLocaleString()})
+ setCreatedAt(new Date().toLocaleString().toString())
+ setId(getTodos?.length)
 }
 
-const hangleChange = (type)=>{
+const handleChange = (type)=>{
     if(type == "ok"){
-        setTodoList([...todoList,dataObj])
-        console.log(todoList.length,dataObj)
+        dispatch(setTodosAction({id:id,name:name,description:description,createdAt:createdAt,images:images,status:status}))
         setIsModalOpen(false)
     }
     if(type == "cancel"){
@@ -107,8 +65,11 @@ const hangleChange = (type)=>{
     }
 }
 
+const handleClick = (type,data)=>{
+    if(type === "delete"){  console.log(type,data.id); dispatch(deleteTodosAction(data.id)) }
+    if(type === "edit"){  setIsModalOpen(false)  }
+}
 
-useEffect(()=>{},[isModalOpen])
   return (
     <Space
       direction="vertical"
@@ -126,8 +87,8 @@ useEffect(()=>{},[isModalOpen])
             <>
               <Row>
                 <Col span={24}>
-                    <AddButton onClick={()=>setIsModalOpen(true)}>+ Todos</AddButton>
-                    <AddModal handleChange={(type)=>hangleChange(type)} isModalOpen={isModalOpen} handleInput={handleInput}/>
+                    <AddButton onClick={()=>setIsModalOpen(true)}>+ Todo</AddButton>
+                    <AddModal handleChange={(type)=>handleChange(type)} isModalOpen={isModalOpen} handleInput={handleInput}/>
                 </Col>
               </Row>
               <Row style={rowStyled}>
@@ -145,13 +106,13 @@ useEffect(()=>{},[isModalOpen])
               <div className="scroll-area p-0 m-0">
                 <Row style={rowStyled}  >
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 0 && ( <TodoCard data={item} key={ind}/>))}
+                        {getTodos.map((item,ind) => item.status === 0 && ( <TodoCard data={item} key={ind}  handleClick={(type,data)=>handleClick(type,data)}/>))}
                     </Col>
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 1 && ( <TodoCard data={item}  key={ind}/>))}
+                        {getTodos.map((item,ind) => item.status === 1 && ( <TodoCard data={item}  key={ind}  handleClick={(type,data)=>handleClick(type,data)}/>))}
                     </Col>
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 2 && ( <TodoCard data={item}  key={ind}/>))}
+                        {getTodos.map((item,ind) => item.status === 2 && ( <TodoCard data={item}  key={ind}  handleClick={(type,data)=>handleClick(type,data)}/>))}
                     </Col>
                 </Row>
               </div>
