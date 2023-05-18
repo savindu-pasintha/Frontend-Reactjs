@@ -1,0 +1,12 @@
+.headerText{
+    color:'red'
+}
+
+.scroll-area {
+    height: 56vh; 
+    width: 100%;
+    overflow: auto;
+  }
+  .scroll-area::-webkit-scrollbar {
+    width: 0.0cm;
+  }
