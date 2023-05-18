@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from 'styled-components'
 import TodoCard from "../../component/TodoCard/TodoCard";
 import './Todo.css'
 import { Layout, Space, Col, Row,Button ,Typography  } from "antd";
+import AddModal from "../../component/Modal/AddModal";
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography;
 
 const Todo = () => {
+    const [dataObj,setDataObj] = useState({id:null,name:'',description:'',createdAt:null,status:0,images:[]})
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [todoList,setTodoList] = useState([
         {
           id: 1,
           name: "Task 1",
           description: "This is a Description.",
-          image: "b64",
+          images: [],
           createdAt: "2023/05/18 17:05PM",
           status:1
         },{
             id: 2,
             name: "Task 2",
             description: "This is a Description.",
-            image: "b64",
+            images: [],
             createdAt: "2023/05/18 17:05PM",
             status:1
           },
@@ -27,21 +30,21 @@ const Todo = () => {
             id: 3,
             name: "Task 3",
             description: "This is a Description.",
-            image: "b64",
+            images: [],
             createdAt: "2023/05/18 17:05PM",
             status:2
           }, {
             id: 4,
             name: "Task 4",
             description: "This is a Description.",
-            image: "b64",
+            images: [],
             createdAt: "2023/05/18 17:05PM",
             status:0
           },{
               id: 5,
               name: "Task 5",
               description: "This is a Description.",
-              image: "b64",
+              images: [],
               createdAt: "2023/05/18 17:05PM",
               status:1
             },
@@ -49,12 +52,63 @@ const Todo = () => {
               id: 6,
               name: "Task 6",
               description: "This is a Description.",
-              image: "b64",
+              images: [],
               createdAt: "2023/05/18 17:05PM",
               status:1
             },
       ])
 
+const handleInput = (type,e)=>{
+ if(type === "name"){
+    console.log(e.target.value)
+    setDataObj({...dataObj, name: e.target.value})
+ }
+
+ if(type === "description"){
+    console.log(e.target.value)
+    setDataObj({...dataObj, descriptions: e.target.value})
+ }
+
+ if(type == "status"){
+    console.log(e)
+    setDataObj({...dataObj,status:e})
+ }
+
+ if (type === "file") {
+   const files = e.target.files;
+   var imgs = [];
+   imgs = dataObj.images;
+   if (files && files.length > 0) {
+     Array.from(files).forEach((file) => {
+       const reader = new FileReader();
+       reader.onload = function (event) {
+         const base64String = event.target.result;
+         imgs.push(base64String);
+       };
+       reader.readAsDataURL(file);
+     });
+     if (imgs.length > 0) {
+       setDataObj({ ...dataObj, images: imgs });
+     }
+   }
+ }
+ const date = new Date()
+ setDataObj({...dataObj, id: todoList.length, createdAt: date.toLocaleString()})
+}
+
+const hangleChange = (type)=>{
+    if(type == "ok"){
+        setTodoList([...todoList,dataObj])
+        console.log(todoList.length,dataObj)
+        setIsModalOpen(false)
+    }
+    if(type == "cancel"){
+         setIsModalOpen(false)
+    }
+}
+
+
+useEffect(()=>{},[isModalOpen])
   return (
     <Space
       direction="vertical"
@@ -72,7 +126,8 @@ const Todo = () => {
             <>
               <Row>
                 <Col span={24}>
-                    <AddButton>+ Add Todos</AddButton>
+                    <AddButton onClick={()=>setIsModalOpen(true)}>+ Todos</AddButton>
+                    <AddModal handleChange={(type)=>hangleChange(type)} isModalOpen={isModalOpen} handleInput={handleInput}/>
                 </Col>
               </Row>
               <Row style={rowStyled}>
@@ -87,16 +142,16 @@ const Todo = () => {
                 </Col>
               </Row>
 
-              <div class="scroll-area p-0 m-0">
+              <div className="scroll-area p-0 m-0">
                 <Row style={rowStyled}  >
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 0 && ( <TodoCard data={item}/>))}
+                        {todoList.map((item,ind) => item.status == 0 && ( <TodoCard data={item} key={ind}/>))}
                     </Col>
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 1 && ( <TodoCard data={item}/>))}
+                        {todoList.map((item,ind) => item.status == 1 && ( <TodoCard data={item}  key={ind}/>))}
                     </Col>
                     <Col span={8} style={colStyled}>
-                        {todoList.map((item,ind) => item.status == 2 && ( <TodoCard data={item}/>))}
+                        {todoList.map((item,ind) => item.status == 2 && ( <TodoCard data={item}  key={ind}/>))}
                     </Col>
                 </Row>
               </div>
@@ -109,10 +164,8 @@ const Todo = () => {
   );
 };
 
-export default Todo;
 
 const rowStyled = {
-   
     color:'white'
 }
 const colStyled = {
@@ -146,7 +199,9 @@ const siderStyle = {
 const footerStyle = {
   textAlign: "center",
   color: "#fff",
-  backgroundColor: parent,
   height: "10vh",
   backgroundColor: "#000",
 };
+
+
+export default Todo;

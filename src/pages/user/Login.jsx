@@ -38,7 +38,7 @@ const Login = () => {
                 setEmail("");
                 setPassword("");
                 window.location.href = "/blogs"
-                // navigate("/blogs")
+            
             }
           
           }else{
