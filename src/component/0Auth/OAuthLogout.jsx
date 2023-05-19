@@ -22,7 +22,7 @@ const OAuthLogout = () => {
       clientId={CLIENT_ID}
       buttonText="LOG OUT"
       onLogoutSucces={onSuccess}
-    //   onFailure={onFailure}
+     onFailure={onFailure}
     render={(renderProps) => (
         <button
           onClick={renderProps.onClick}

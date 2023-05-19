@@ -10,6 +10,7 @@ import {
 } from "../../../StatesManagement/reducers/TodosReducerslice";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterOutlined} from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
 
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -17,6 +18,8 @@ const { Title } = Typography;
 const Todo = () => {
   const dispatch = useDispatch();
   const getTodos = useSelector((state) => state.todo).todos;
+  const getProfile = useSelector(state=>state.profile)
+  const navigate = useNavigate()
   const [id, setId] = useState(0);
   const [status, setStatus] = useState(0);
   const [name, setName] = useState("");
@@ -89,6 +92,11 @@ const Todo = () => {
     }
   };
 
+  useEffect(()=>{
+    if(getProfile){
+        navigate('/login')
+    }
+  },[])
   return (
     <>
       <Row>

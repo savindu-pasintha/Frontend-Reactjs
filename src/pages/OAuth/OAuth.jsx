@@ -21,15 +21,15 @@ const OAuth = () => {
     // const accessTokne = gapi.auth.getToken().access_token
   return (
     <div className="container">
-      {!getProfile ? (
+    
         <div className="row">
           <OAuthLogin />
         </div>
-      ) : (
+      
         <div className="row">
           <OAuthLogout />
         </div>
-      )}
+     
     </div>
   );
 }
