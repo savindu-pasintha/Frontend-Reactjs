@@ -12,7 +12,7 @@ const AddModal = ({handleChange,isModalOpen,handleInput}) => {
             <Input placeholder="Task Description" type="text" onChange={(e)=>handleInput("description",e)}/>
         </div>
         <div className='mt-4'>
-            <Input placeholder="Task Description" type="file" accept='image/*' onChange={(e)=>handleInput("file",e)}/>
+            <Input placeholder="Task Description" type="file" accept='image/*' multiple onChange={(e)=>handleInput("file",e)}/>
         </div>
         <div className='mt-4'>
             <Select

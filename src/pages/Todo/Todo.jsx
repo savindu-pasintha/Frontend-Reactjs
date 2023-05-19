@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import TodoCard from "../../component/TodoCard/TodoCard";
 import "./Todo.css";
-import { Layout, Space, Col, Row, Button, Typography } from "antd";
+import { Layout, Space, Col, Row, Button, Typography,DatePicker } from "antd";
 import AddModal from "../../component/Modal/AddModal";
 import {
   setTodosAction,
@@ -92,6 +92,11 @@ const Todo = () => {
     }
   };
 
+  const onChangeFilter = (date, dateString) => {
+    console.log(getTodos)
+    console.log(date, dateString);
+  };
+
   useEffect(()=>{
     if(getProfile){
         // navigate('/login')
@@ -108,7 +113,9 @@ const Todo = () => {
             handleInput={handleInput}
           />
         </Col>
-        <div className="d-flex w-100 m-2"> <FilterOutlined style={{color:"red",fontSize:30}}  label="" onClick={(e)=>{consolr.log("")}}/> </div>
+        <div className="d-flex w-100 m-2"> <FilterOutlined style={{color:"red",fontSize:30}}  label="" onClick={(e)=>{consolr.log("")}}/> 
+        <DatePicker onChange={onChangeFilter} />
+        </div>
       </Row>
       <Row style={rowStyled}>
         <Col span={8} style={colStyled}>
