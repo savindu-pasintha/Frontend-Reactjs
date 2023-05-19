@@ -94,7 +94,7 @@ const Todo = () => {
 
   useEffect(()=>{
     if(getProfile){
-        navigate('/login')
+        // navigate('/login')
     }
   },[])
   return (
