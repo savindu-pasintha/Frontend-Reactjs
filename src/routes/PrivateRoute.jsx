@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/UseAuth';
 
 
 const PrivateRoute = ({element}) => {
+   
   return useAuth() ? element : <Navigate to="/login" />
 }
 

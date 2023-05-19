@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {GoogleLogin} from 'react-google-login'
 import { CLIENT_ID } from '../../../env'
 import styled, { css } from "styled-components";
@@ -15,11 +15,12 @@ import { toast } from "react-toastify";
 const OAuthLogin = () => {
   const dispatch =  useDispatch()
   const navigate = useNavigate()
-  const [alreadySignIn,setAlreadySignIn] = useState(false)
+  const isUserInteracted= useRef(false);
 
     const onSuccess =(res)=>{
-      console.log("succes",res)
-      if(res && localStorage.getItem("active_user") == "false" && alreadySignIn){
+      console.log("21",res,isUserInteracted.current)
+      if(isUserInteracted.current){
+        
         localStorage.setItem("active_user",true)
         dispatch(setProfileAction(res))
         toast.success('Success Full', {
@@ -32,10 +33,10 @@ const OAuthLogin = () => {
           progress: undefined,
           theme: "light",
           });
-        
+        isUserInteracted.current = false
         navigate("/todo")
       }
-      setAlreadySignIn(false)
+     
     }
 
     const onFailure =(res)=>{
@@ -56,7 +57,7 @@ const OAuthLogin = () => {
 
  
   return (
-    <div className='btnContainer'>
+    <div className='btnContainer'  onClick={(e) => {isUserInteracted.current = true; console.log(isUserInteracted.current);} }>
       <GoogleLogin
       style={{maxwidth:'150px'}}
       clientId={CLIENT_ID}

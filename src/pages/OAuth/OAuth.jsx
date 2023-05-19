@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import OAuthLogin from '../../component/0Auth/OAuthLogin'
 import OAuthLogout from '../../component/0Auth/OAuthLogout'
 import { gapi } from 'gapi-script'
@@ -6,9 +6,9 @@ import { CLIENT_ID } from '../../../env'
 import { useSelector } from 'react-redux'
 
 const OAuth = () => {
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
    const getProfile = useSelector(state=>state.profile)
-   console.log(getProfile)
-
+  
     useEffect(()=>{
         const start =()=>{
             gapi.client.init({
@@ -18,8 +18,13 @@ const OAuth = () => {
         }
         gapi.load('client:auth2',start)
     },[])
+
+    useEffect(() => {
+        setIsPageLoaded(true);
+      }, []);
+
     // const accessTokne = gapi.auth.getToken().access_token
-  return (
+  return isPageLoaded && (
     <div className="container">
     
         <div className="row">

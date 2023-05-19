@@ -43,24 +43,24 @@ const OAuthLogout = () => {
        
     }
   return (
-    <div  className="btnContainer" onClick={(e)=>onSuccess()}><div
+    <div  className="btnContainer" onClick={(e)=>onSuccess()}><GoogleLogout
        
-    //    id="oAuthBtn"
-    //   clientId={CLIENT_ID}
-    //   buttonText="LOG OUT"
-    //   onLogoutSucces={onSuccess}
-    //   onFailure={onFailure}
-    //   render={(renderProps) => (
-    //     <button
-    //       onClick={renderProps.onClick}
-    //       disabled={renderProps.disabled}
-    //       id="oAuthBtn"
-    //     >
-    //       Log Out in Google
-    //     </button>
-    //   )}
+       id="oAuthBtn"
+      clientId={CLIENT_ID}
+      buttonText="LOG OUT"
+      onLogoutSucces={onSuccess}
+      onFailure={onFailure}
+      render={(renderProps) => (
+        <button
+          onClick={renderProps.onClick}
+          disabled={renderProps.disabled}
+          id="oAuthBtn"
+        >
+          Log Out in Google
+        </button>
+      )}
      
-    >Log Out in Google</div></div>
+    /></div>
   )
 }
 
