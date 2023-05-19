@@ -3,8 +3,12 @@ import OAuthLogin from '../../component/0Auth/OAuthLogin'
 import OAuthLogout from '../../component/0Auth/OAuthLogout'
 import { gapi } from 'gapi-script'
 import { CLIENT_ID } from '../../../env'
+import { useSelector } from 'react-redux'
 
 const OAuth = () => {
+   const getProfile = useSelector(state=>state.profile)
+   console.log(getProfile)
+
     useEffect(()=>{
         const start =()=>{
             gapi.client.init({
@@ -16,16 +20,18 @@ const OAuth = () => {
     },[])
     // const accessTokne = gapi.auth.getToken().access_token
   return (
-    <div className='container'>
-       <div className='row'>
+    <div className="container">
+      {!getProfile ? (
+        <div className="row">
           <OAuthLogin />
-       </div>
-       <div className='row'>
+        </div>
+      ) : (
+        <div className="row">
           <OAuthLogout />
-       </div>
-       
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
 export default OAuth

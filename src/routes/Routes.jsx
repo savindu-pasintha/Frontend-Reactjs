@@ -8,7 +8,6 @@ const Routes = [{
 {
     name:"Login",
     path:'/login'
-
 },
 // {
 //     name:"Logout",

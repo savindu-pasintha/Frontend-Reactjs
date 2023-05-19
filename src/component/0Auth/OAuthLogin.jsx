@@ -4,17 +4,27 @@ import { CLIENT_ID } from '../../../env'
 import styled, { css } from "styled-components";
 import { style } from '@mui/system';
 import './Styles.css'
+import { useDispatch } from 'react-redux';
+import { deleteProfileAction, setProfileAction } from '../../../StatesManagement/reducers/UserSigninReducerslice';
+import { useNavigate } from 'react-router-dom';
 // import dotenv from 'dotenv'
 // dotenv.config() 
 
 
 const OAuthLogin = () => {
+  const dispatch =  useDispatch()
+  const navigate = useNavigate()
     const onSuccess =(res)=>{
-        console.log("success",res.profileObj)
+      if(res){
+        dispatch(setProfileAction(res))
+        navigate("/todo")
+      }
     }
 
     const onFailure =(res)=>{
-        console.log("failed",res)
+      dispatch(deleteProfileAction(res))
+      
+        // console.log("failed",res)
     }
 
  
