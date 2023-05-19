@@ -7,7 +7,7 @@ import AddModal from "../../component/Modal/AddModal";
 import {
   setTodosAction,
   deleteTodosAction,
-} from "../../../StatesManagement/reducers/TodosReducerslice";
+} from "../../StatesManagement/reducers/TodosReducerslice";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterOutlined} from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";

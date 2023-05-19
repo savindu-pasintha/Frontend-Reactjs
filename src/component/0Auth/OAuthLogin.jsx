@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { style } from '@mui/system';
 import './Styles.css'
 import { useDispatch } from 'react-redux';
-import { deleteProfileAction, setProfileAction } from '../../../StatesManagement/reducers/UserSigninReducerslice';
+import { deleteProfileAction, setProfileAction } from '../../StatesManagement/reducers/UserSigninReducerslice';
 import { useNavigate } from 'react-router-dom';
 // import dotenv from 'dotenv'
 // dotenv.config() 
@@ -14,17 +14,18 @@ import { useNavigate } from 'react-router-dom';
 const OAuthLogin = () => {
   const dispatch =  useDispatch()
   const navigate = useNavigate()
+
     const onSuccess =(res)=>{
-      if(res){
+      if(res && localStorage.getItem("active_user" === false)){
+        localStorage.setItem("active_user",true)
         dispatch(setProfileAction(res))
-        navigate("/todo")
+        console.log("/todo")
       }
     }
 
     const onFailure =(res)=>{
       dispatch(deleteProfileAction(res))
-      
-        // console.log("failed",res)
+      localStorage.setItem("active_user",false)
     }
 
  
