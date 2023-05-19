@@ -13,6 +13,7 @@ const LayoutScreen = () => {
       direction="vertical"
       style={{
         width: "100%",
+        height:'100vh',
         backgroundColor: "#000",
       }}
       size={[0, 48]}
