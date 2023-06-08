@@ -1,22 +1,16 @@
 version: 0.2
+
 phases:
-  install:
-    runtime-versions:
-      docker: 19
   pre_build:
     commands:
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=681373743177.dkr.ecr.us-east-2.amazonaws.com/my-app
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-easet-2 | docker login --username AWS --password-stdin 718306285872.dkr.ecr.us-east-2.amazonaws.com
   build:
     commands:
-      - docker build -t $REPOSITORY_URI:latest -f Dockerfile.prod .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - echo Building the Docker image...
+      - docker build -t vite-app-production .
+      - docker tag vite-app-production:latest 718306285872.dkr.ecr.us-easet-2.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
   post_build:
     commands:
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"vite-app-production-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-artifacts:
-  files: imagedefinitions.json
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-easet-2.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
