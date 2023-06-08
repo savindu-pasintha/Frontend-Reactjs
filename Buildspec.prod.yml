@@ -4,13 +4,13 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 718306285872.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password | docker login --username AWS --password-stdin 718306285872.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - echo Building the Docker image...
       - docker build -t vite-app-production .
-      - docker tag vite-app-production:latest 718306285872.dkr.ecr.us-east-2.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
+      - docker tag vite-app-production:latest 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 718306285872.dkr.ecr.us-east-2.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
+      - docker push 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
