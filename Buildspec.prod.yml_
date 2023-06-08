@@ -9,8 +9,8 @@ phases:
     commands:
       - echo Building the Docker image...
       - docker build -t vite-app-production .
-      - docker tag vite-app-production:latest 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
+      - docker tag vite-app-production:latest 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ecr_repository:latest
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ECR_REPOSITORY_NAME:latest
+      - docker push 718306285872.dkr.ecr.us-east-1.amazonaws.com/vite_app_production_ecr_repository:latest
